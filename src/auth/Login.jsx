@@ -24,7 +24,7 @@ const Login = () => {
 
   try {
     await login(email, password);
-    navigate("/", { replace: true });
+    window.location.href = "https://app.shikshacom.com";
   } catch (err) {
       const message =
         typeof err === "string"
