@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import '../css/Courses.css';
-import { Link } from 'react-router-dom';
+
+import { useNavigate } from "react-router-dom";
+
+
+
 
 const Courses = () => {
   const [selectedClass, setSelectedClass] = useState('Class 8');
   const [selectedStream, setSelectedStream] = useState(null);
+
+
+  const navigate = useNavigate();
 
   const subjectsData = {
     'Class 8': [
@@ -97,6 +104,16 @@ const Courses = () => {
   const handleBackClick = () => {
     setSelectedStream(null);
   };
+const handleSubjectClick = (subjectName) => {
+  navigate("/payment", {
+    state: {
+      className: selectedClass,
+      stream: selectedStream,
+      subject: subjectName,
+      price: 1200,
+    },
+  });
+};
 
   const renderContent = () => {
     if (selectedStream) {
@@ -122,7 +139,12 @@ const Courses = () => {
           <h3>{selectedClass}</h3>
           <div className="courses-streams-grid">
             {Object.keys(subjectsData[selectedClass]).map((stream, index) => (
-              <div className="courses-stream-card" key={index} onClick={() => handleStreamClick(stream)}>
+             <div
+  className="courses-subject-card"
+  key={index}
+  onClick={() => handleSubjectClick(subject.name)}>
+
+              onClick={() => handleStreamClick(stream)}
                 <h4>{stream}</h4>
                 <p>Click to view subjects</p>
               </div>
@@ -137,7 +159,12 @@ const Courses = () => {
           <h3>{selectedClass}</h3>
           <div className="courses-subjects-grid">
             {subjectsData[selectedClass].map((subject, index) => (
-              <div className="courses-subject-card" key={index}>
+              <div
+  className="courses-subject-card"
+  key={index}
+  onClick={() => handleSubjectClick(subject.name)}
+>
+
                 <div className="card-icon">{subject.icon}</div>
                 <h4>{subject.name}</h4>
               </div>

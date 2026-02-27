@@ -8,12 +8,12 @@ import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
   const { t, switchLanguage } = useLanguage();
-  const { isAuthenticated, user, logout, hasRole, loading } = useAuth();
+  const { isAuthenticated, user, logout, loading } = useAuth();
   const navigate = useNavigate();
 
   const [fontSize, setFontSize] = useState(1);
 
-  // ⛔ Prevent wrong buttons during auth bootstrap
+  // Prevent render while auth bootstraps
   if (loading) return null;
 
   /* ================= Accessibility ================= */
@@ -31,6 +31,7 @@ const Navbar = () => {
   };
 
   /* ================= Logout ================= */
+
   const handleLogout = () => {
     logout();
     navigate("/login", { replace: true });
@@ -40,7 +41,7 @@ const Navbar = () => {
     <>
       {/* ===== TOP STRIP ===== */}
       <div className="top-strip">
-        <marquee width="90%" direction="left" height="30px" scrollamount="10">
+        <marquee width="90%" direction="left" height="30px" scrollAmount="10">
           <span>Hurry Up!!! Admission is going on.</span>
           <span> | New session starts from 2026 | </span>
           <span className="blink">Register Now!</span>
@@ -100,11 +101,11 @@ const Navbar = () => {
           </li>
 
           <li className="nav-item dropdown">
-            <Link to="/upcoming">{t('registration')}</Link>
+            <Link to="/upcoming">{t("registration")}</Link>
             <ul className="dropdown-menu">
-              <li><Link to="/upcoming">{t('students')}</Link></li>
-              <li><Link to="/upcoming">{t('teachers')}</Link></li>
-              <li><Link to="/upcoming">{t('experts')}</Link></li>
+              <li><Link to="/upcoming">{t("students")}</Link></li>
+              <li><Link to="/upcoming">{t("teachers")}</Link></li>
+              <li><Link to="/upcoming">{t("experts")}</Link></li>
             </ul>
           </li>
 
@@ -130,42 +131,24 @@ const Navbar = () => {
             </ul>
           </li>
 
-          <li><Link to="/insight">{t("insight")}</Link></li>
-
           <li className="nav-item dropdown">
-            <Link to="/training">{t('training')}</Link>
+            <Link to="/training">{t("training")}</Link>
             <ul className="dropdown-menu">
-              <li><Link to="/training">{t('industrial')}</Link></li>
-              <li><Link to="/training">{t('specialized')}</Link></li>
+              <li><Link to="/training">{t("industrial")}</Link></li>
+              <li><Link to="/training">{t("specialized")}</Link></li>
             </ul>
           </li>
 
+          <li><Link to="/insight">{t("insight")}</Link></li>
           <li><Link to="/contact">{t("contact")}</Link></li>
 
-          {/* ===== AUTH SECTION ===== */}
+          {/* ===== AUTH (LOGOUT ONLY) ===== */}
           {isAuthenticated && user && (
-            <>
-              {hasRole?.("teacher") && (
-                <li><Link to="/teacher">Teacher</Link></li>
-              )}
-
-              {hasRole?.("admin") && (
-                <li><Link to="/admin">Admin</Link></li>
-              )}
-
-              <li className="nav-user">
-                <span className="nav-email">{user.email}</span>
-                <button onClick={handleLogout} className="logout-btn">
-                  Logout
-                </button>
-              </li>
-            </>
-          )}
-
-          {!isAuthenticated && (
-            <li className="nav-auth">
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Signup</Link>
+            <li className="nav-user">
+              <span className="nav-email">{user.email}</span>
+              <button onClick={handleLogout} className="logout-btn">
+                Logout
+              </button>
             </li>
           )}
         </ul>

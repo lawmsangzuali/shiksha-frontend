@@ -459,6 +459,7 @@ const GeneralStudies = () => {
       options: ['Sardar Patel', 'Jawaharlal Nehru', 'Mahatma Gandhi', 'Rajguru'],
       correct: 1
     },
+    
     {
       question: 'What is the largest planet in our solar system?',
       options: ['Earth', 'Mars', 'Jupiter', 'Saturn'],

@@ -1,0 +1,36 @@
+.payment-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #faf3df;
+}
+
+.payment-card {
+  background: white;
+  padding: 30px;
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.payment-card p {
+  margin: 10px 0;
+}
+
+.pay-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #ffb703;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pay-btn:hover {
+  background: #fca311;
+}
