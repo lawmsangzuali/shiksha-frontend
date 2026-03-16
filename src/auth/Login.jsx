@@ -19,52 +19,68 @@ const EyeOffIcon = () => (
 );
 
 const Login = () => {
-  const { login, isAuthenticated, user } = useAuth();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setSubmitting(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setStatusMessage("");
+    setSubmitting(true);
 
-  try {
-    const loggedInUser = await login(email, password);
+    try {
+      setStatusMessage("Checking your account...");
+      const loggedInUser = await login(email, password);
 
-    const roles = loggedInUser?.roles || user?.roles || [];
+      const roles = Array.isArray(loggedInUser?.roles) ? loggedInUser.roles : [];
+      const isTeacher = roles.some((r) => String(r).toLowerCase() === "teacher");
 
-    const isTeacher = roles.some(
-  (r) => r.toLowerCase() === "teacher"
-            );
+      setIsRedirecting(true);
+      setStatusMessage(
+        isTeacher
+          ? "Login successful. Redirecting to teacher dashboard..."
+          : "Login successful. Redirecting to student dashboard..."
+      );
 
-    console.log("Logged in user:", loggedInUser);
-    console.log("Role detected:", roles);
+      const targetUrl = isTeacher
+        ? "https://teacher.shikshacom.com"
+        : "https://app.shikshacom.com";
 
-    if (isTeacher) {
-      window.location.href = "https://teacher.shikshacom.com";
-    } else {
-      window.location.href = "https://app.shikshacom.com";
+      setTimeout(() => {
+        window.location.replace(targetUrl);
+      }, 500);
+    } catch (err) {
+      const message =
+        err?.response?.data?.detail ||
+        err?.message ||
+        "Login failed";
+
+      setError(message);
+      setStatusMessage("");
+      setIsRedirecting(false);
+      setSubmitting(false);
     }
-
-  } catch (err) {
-    const message =
-      err?.response?.data?.detail ||
-      err?.message ||
-      "Login failed";
-
-    setError(message);
-  } finally {
-    setSubmitting(false);
-  }
-};
-
+  };
 
   return (
-    <div className="login-container">
+    <div className={`login-container ${isRedirecting ? "is-redirecting" : ""}`}>
+      {isRedirecting && (
+        <div className="login-overlay">
+          <div className="login-overlay-card">
+            <div className="login-spinner"></div>
+            <h3>Please wait</h3>
+            <p>{statusMessage}</p>
+          </div>
+        </div>
+      )}
+
       <div className="login-form">
         <h2>Login</h2>
 
@@ -76,6 +92,7 @@ const handleSubmit = async (e) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={submitting}
             />
           </div>
 
@@ -87,12 +104,14 @@ const handleSubmit = async (e) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={submitting}
               />
               <button
                 type="button"
                 className="toggle-password"
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setShowPassword(p => !p)}
+                onClick={() => setShowPassword((p) => !p)}
+                disabled={submitting}
               >
                 {showPassword ? <EyeOffIcon /> : <EyeIcon />}
               </button>
@@ -100,9 +119,12 @@ const handleSubmit = async (e) => {
           </div>
 
           {error && <p className="login-error">{String(error)}</p>}
+          {statusMessage && !error && !isRedirecting && (
+            <p className="login-status">{statusMessage}</p>
+          )}
 
           <button type="submit" className="login-submit-btn" disabled={submitting}>
-            {submitting ? "Logging in..." : "Login"}
+            {submitting ? "Please wait..." : "Login"}
           </button>
         </form>
 
