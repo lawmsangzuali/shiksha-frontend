@@ -8,7 +8,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
   const { t, switchLanguage } = useLanguage();
-  const { isAuthenticated, user, logout, loading } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
   const navigate = useNavigate();
 
   const [fontSize, setFontSize] = useState(1);
