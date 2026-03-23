@@ -8,17 +8,21 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!(user && (user.id || user.email || user.username));
 
-  /**
-   * Bootstraps user session using HttpOnly cookie
-   */
   const bootstrap = useCallback(async () => {
     try {
-      const res = await api.get("/accounts/me/");
-      setUser(res.data);
-      return res.data; // return fetched user so callers can act on it
-    } catch (err) {
+      const res = await api.get("/api/accounts/me/");
+      const me = res.data;
+
+      if (me && (me.id || me.email || me.username)) {
+        setUser(me);
+        return me;
+      } else {
+        setUser(null);
+        return null;
+      }
+    } catch {
       setUser(null);
       return null;
     } finally {
@@ -26,24 +30,14 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  /**
-   * Run bootstrap on first load
-   * Browser automatically sends cookies
-   */
   useEffect(() => {
     bootstrap();
   }, [bootstrap]);
 
-  /**
-   * Login
-   * Backend sets HttpOnly cookies
-   */
   const login = async (email, password) => {
     try {
-      await api.post("/accounts/login/", { email, password });
-
+      await api.post("/api/accounts/login/", { email, password });
       setLoading(true);
-      // bootstrap returns the authenticated user object
       const me = await bootstrap();
       return me;
     } catch (err) {
@@ -52,24 +46,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  /**
-   * Signup
-   */
   const signup = async (payload) => {
     try {
-      await api.post("/accounts/signup/", payload);
+      await api.post("/api/accounts/signup/", payload);
     } catch (err) {
       return Promise.reject(extractError(err));
     }
   };
 
-  /**
-   * Logout
-   * Calls backend to clear cookies
-   */
   const logout = async () => {
     try {
-      await api.post("/accounts/logout/");
+      await api.post("/api/accounts/logout/");
     } catch {
       // ignore network failure
     }
@@ -77,13 +64,20 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  /**
-   * Check if user has a specific role
-   */
   const hasRole = (role) => {
     if (!user) return false;
-    const userRole = (user.role || "").toLowerCase();
-    return userRole === role.toLowerCase();
+
+    if (String(user?.role || "").toLowerCase() === role.toLowerCase()) {
+      return true;
+    }
+
+    if (Array.isArray(user?.roles)) {
+      return user.roles.some(
+        (r) => String(r).toLowerCase() === role.toLowerCase()
+      );
+    }
+
+    return false;
   };
 
   return (

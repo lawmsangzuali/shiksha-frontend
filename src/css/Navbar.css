@@ -472,3 +472,14 @@
 .dropdown-menu li a.active:hover {
   background: #e6f0ff;
 }
+
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-username {
+  font-weight: 600;
+  color: #0b3d2e;
+}
