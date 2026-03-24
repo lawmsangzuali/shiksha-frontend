@@ -138,3 +138,26 @@
     display: block;
   }
 }
+
+.search-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #0b5d3b;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-btn:hover {
+  opacity: 0.9;
+  background-color: #ffedc6;
+  color: #1a1a1a;
+}

@@ -1,12 +1,15 @@
 /* ===== WRAPPER ===== */
 .main-grid {
   display: grid;
-  grid-template-columns: 2.5fr 1fr;
-  gap: 24px;
-  max-width: 100%;
-  margin: 20px 0 48px 0;
+  grid-template-columns: 2.5fr 400px;
+  gap: 28px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 20px auto 48px;
   background: #f9f7f0;
   padding: 0 40px;
+  align-items: start;
+  box-sizing: border-box;
 }
 
 /* ===== HERO SLIDESHOW ===== */
@@ -30,15 +33,13 @@
   transition: opacity 0.5s ease;
 }
 
-/* Dark gradient at bottom */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 55%);
   pointer-events: none;
 }
 
-/* Slide title */
 .hero-title {
   position: absolute;
   bottom: 52px;
@@ -47,15 +48,14 @@
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
-/* Arrow buttons */
 .hero-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.18);
   border: none;
   color: #fff;
   font-size: 2.4rem;
@@ -72,13 +72,17 @@
 }
 
 .hero-arrow:hover {
-  background: rgba(255,255,255,0.35);
+  background: rgba(255, 255, 255, 0.35);
 }
 
-.hero-arrow--left  { left: 14px; }
-.hero-arrow--right { right: 14px; }
+.hero-arrow--left {
+  left: 14px;
+}
 
-/* Dot navigation */
+.hero-arrow--right {
+  right: 14px;
+}
+
 .hero-dots {
   position: absolute;
   bottom: 14px;
@@ -92,7 +96,7 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.45);
+  background: rgba(255, 255, 255, 0.45);
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
@@ -102,83 +106,76 @@
   transform: scale(1.25);
 }
 
-/* ===== NOTIFICATION PANEL ===== */
+/* ===== LATEST UPDATES PANEL ===== */
 .notification-panel {
-  background-color: #ffffff;
-  padding: 24px 16px;
-  height: 460px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px;
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
-  margin: 20px 0;
+  width: 100%;
+  min-height: 440px;
+  background: #f7f6f1;
+  border: 1px solid #b9b4aa;
+  border-radius: 18px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.14);
+  padding: 28px 20px 22px;
+  overflow: hidden;
+  margin: 20px 10px 15px 24px;
+  box-sizing: border-box;
 }
 
 .notification-panel h3 {
-  color: #1a1a1a;
-  margin-bottom: 18px;
-  font-size: 1.3rem;
-  font-weight: 700;
+  margin: 0px;
   text-align: center;
-  text-transform: none;
-  letter-spacing: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111111;
 }
 
 .rolling-notification-container {
-  flex: 1;
+  height: 350px;
   overflow: hidden;
   position: relative;
 }
 
 .notification-list {
-  position: absolute;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 14px;
+  will-change: transform;
 }
 
 .notification-item {
-  background-color: #fff;
+  background: #ffffff;
   border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-  min-height: 50px;
-  height: auto;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.14);
+  padding: 14px 16px;
   display: flex;
-  align-items: flex-start;
-  border: 1px solid #f0ece4;
+  align-items: center;
 }
 
 .notification-item p {
-  color: #3a3a3a;
   margin: 0;
-  font-size: 12.5px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 400;
+  color: #222222;
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .main-grid {
     grid-template-columns: 1fr;
+    padding: 0 20px;
   }
 
   .hero-slideshow {
-    width: 100%;
     height: 320px;
-  }
-
-  .notification-panel {
-    height: auto;
-    min-height: 280px;
-    box-shadow: none;
-    border-radius: 0;
-    border-top: 1px solid #e8e0d0;
-    margin: 0;
   }
 }
 
 @media (max-width: 600px) {
+  .main-grid {
+    padding: 0 16px;
+  }
+
   .hero-slideshow {
     height: 220px;
   }
@@ -186,5 +183,26 @@
   .hero-title {
     font-size: 1.2rem;
     bottom: 40px;
+  }
+
+  .notification-panel {
+    padding: 22px 16px 18px;
+  }
+
+  .notification-panel h3 {
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
+
+  .rolling-notification-container {
+    height: 340px;
+  }
+
+  .notification-item {
+    padding: 12px 14px;
+  }
+
+  .notification-item p {
+    font-size: 13px;
   }
 }

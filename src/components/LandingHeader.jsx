@@ -49,6 +49,14 @@ const searchableRoutes = {
   register: '/signup',
 
   dashboard: '/dashboard',
+
+  // extra helpful keywords
+  teacher: '/courses',
+  teachers: '/courses',
+  topic: '/courses',
+  topics: '/courses',
+  study: '/courses',
+  class: '/courses',
 };
 
 const LandingHeader = () => {
@@ -74,8 +82,13 @@ const LandingHeader = () => {
       (key) => key.includes(value) || value.includes(key)
     );
 
-    navigate(matchedKey ? searchableRoutes[matchedKey] : '/');
-    setSearchTerm('');
+    if (matchedKey) {
+      navigate(searchableRoutes[matchedKey]);
+      setSearchTerm('');
+      return;
+    }
+
+    alert('No matching page found.');
   };
 
   return (
@@ -83,14 +96,20 @@ const LandingHeader = () => {
       <form className="search-section" onSubmit={handleSearch}>
         <input
           type="text"
-          placeholder="Search courses, teachers, topics..."
+          placeholder="Search pages like courses, placement, training..."
           className="search-bar"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+
+        <button type="submit" className="search-btn">
+          Search
+        </button>
       </form>
 
-      <Link to="/courses" className="demo-btn">demo</Link>
+      <Link to="/courses" className="demo-btn">
+        Demo
+      </Link>
     </div>
   );
 };

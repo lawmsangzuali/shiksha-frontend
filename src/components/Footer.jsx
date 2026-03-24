@@ -55,7 +55,7 @@ const Footer = () => {
           <a href="https://www.youtube.com/@Shikshacom-edu" className="social-icon" aria-label="YouTube"><FaYoutube /></a>
         </div>
         <div className="copyright">
-          ©2025 ShikshaCom.com
+          ©2026 ShikshaCom.com
         </div>
       </div>
     </footer>

@@ -81,24 +81,24 @@ const MainGrid = () => {
       </div>
 
       {/* ===== LATEST UPDATES ===== */}
-      <div className="notification-panel">
-        <h3>Latest Updates</h3>
-        <div className="rolling-notification-container">
-          <div
-            className="notification-list"
-            style={{
-              transform: `translateY(-${scrollPosition}px)`,
-              transition: 'transform 0.8s ease-in-out'
-            }}
-          >
-            {longNotificationsList.map((notification, index) => (
-              <div key={index} className="notification-item">
-                <p>{notification}</p>
-              </div>
-            ))}
-          </div>
+<div className="notification-panel">
+  <h3>Latest Updates</h3>
+  <div className="rolling-notification-container">
+    <div
+      className="notification-list"
+      style={{
+        transform: `translateY(-${scrollPosition}px)`,
+        transition: 'transform 0.8s ease-in-out'
+      }}
+    >
+      {longNotificationsList.map((notification, index) => (
+        <div key={index} className="notification-item">
+          <p>{notification}</p>
         </div>
-      </div>
+      ))}
+    </div>
+  </div>
+</div>
 
     </div>
   );
