@@ -23,7 +23,7 @@ export default function NotificationsPage() {
             const total = res.data.count || res.data.length;
             setTotalPages(Math.ceil(total / pageSize));
         } catch (error) {
-            console.error("Failed to fetch notifications:", err);
+            console.error("Failed to fetch notifications:", error);
         } finally {
             setLoading(false);
         }   

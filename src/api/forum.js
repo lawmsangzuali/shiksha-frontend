@@ -67,9 +67,9 @@ export async function toggleCommentUpvote(commentId) {
 // =====================================================
 // Notifications
 // =====================================================
-export async function getNotifications() {
-  const res = await api.get("/forum/notifications/");
-  return res.data;
+export async function getNotifications(params = {}) {
+  const res = await api.get("/forum/notifications/", { params });
+  return res;
 }
 
 export async function markAllNotificationsRead() {
