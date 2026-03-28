@@ -24,7 +24,9 @@ const ThreadListPage = () => {
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [threads, setThreads] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const pageSize = 10;
 
   const [filters, setFilters] = useState({
     search: '',
@@ -43,6 +45,7 @@ const ThreadListPage = () => {
         const data = await getThreads(filters);
         if (!mounted) return;
         setThreads(data.results || []);
+            setTotalCount(data.count || 0);
       } catch (e) {
         console.error(e);
       } finally {
@@ -120,6 +123,22 @@ const ThreadListPage = () => {
               <ThreadCard key={t.id} thread={t} isLoggedIn={isLoggedIn} />
             ))
           )}
+        </div>
+      )}
+
+      {/* Pagination */}
+      {totalCount > pageSize && (
+        <div className="forum-pagination">
+          <span>Page {filters.page} of {Math.ceil(totalCount / pageSize)}</span>
+          {Array.from({ length: Math.ceil(totalCount / pageSize) }, (_, i) => i + 1).map((p) => (
+            <button
+              key={p}
+              className={`forum-page-btn${p === filters.page ? ' active' : ''}`}
+              onClick={() => setFilters({ ...filters, page: p })}
+            >
+              {p}
+            </button>
+          ))}
         </div>
       )}
     </div>
