@@ -9,6 +9,7 @@ import DateFilter from './DateFilter';
 import { useAuth } from '../contexts/AuthContext';
 import { useNotification } from '../contexts/NotificationContext';
 import '../css/forum.css';
+import '../css/NotificationsPage.css';
 
 const ThreadListPage = () => {
   const navigate = useNavigate();
@@ -127,20 +128,37 @@ const ThreadListPage = () => {
       )}
 
       {/* Pagination */}
-      {totalCount > pageSize && (
-        <div className="forum-pagination">
-          <span>Page {filters.page} of {Math.ceil(totalCount / pageSize)}</span>
-          {Array.from({ length: Math.ceil(totalCount / pageSize) }, (_, i) => i + 1).map((p) => (
+      {totalCount > pageSize && (() => {
+        const totalPages = Math.ceil(totalCount / pageSize);
+        return (
+          <div className="notifications-pagination">
             <button
-              key={p}
-              className={`forum-page-btn${p === filters.page ? ' active' : ''}`}
-              onClick={() => setFilters({ ...filters, page: p })}
+              className="page-btn"
+              onClick={() => setFilters({ ...filters, page: Math.max(1, filters.page - 1) })}
+              disabled={filters.page === 1}
             >
-              {p}
+              &larr;
             </button>
-          ))}
-        </div>
-      )}
+            <span>Page {filters.page} of {totalPages}</span>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                className={`page-btn ${p === filters.page ? 'active' : ''}`}
+                onClick={() => setFilters({ ...filters, page: p })}
+              >
+                {p}
+              </button>
+            ))}
+            <button
+              className="page-btn"
+              onClick={() => setFilters({ ...filters, page: Math.min(totalPages, filters.page + 1) })}
+              disabled={filters.page === totalPages}
+            >
+              &rarr;
+            </button>
+          </div>
+        );
+      })()}
     </div>
   );
 };
