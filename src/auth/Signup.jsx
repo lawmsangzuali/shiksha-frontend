@@ -55,9 +55,9 @@ const Signup = () => {
         },
       });
     } catch (err) {
-      setError(
-        err?.message || "Signup failed. Please try again."
-      );
+      const raw = err?.message ?? err;
+      const msg = raw instanceof Error ? raw.message : typeof raw === "string" ? raw : "Signup failed. Please try again.";
+      setError(msg);
     } finally {
       setSubmitting(false);
     }
