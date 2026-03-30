@@ -1,59 +1,47 @@
 import { useEffect, useState, useRef } from 'react';
+import image1 from '../assets/image1.jpg';
+import image2 from '../assets/image2.jpg';
+import image3 from '../assets/image3.jpg';
+import image4 from '../assets/image4.jpg';
+import image5 from '../assets/image5.jpg';
+import image6 from '../assets/image6.jpg';
 import '../css/Hero.css';
 
 const subjectCards = [
   {
     id: 1,
     name: 'Physics',
-    tag: 'Live Now',
-    tagClass: 'tag-live',
-    icon: 'fa-atom',
-    img: 'https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=400&q=80',
+    img: image1,
     accent: '#60a5fa',
   },
   {
     id: 2,
     name: 'Chemistry',
-    tag: 'Recorded',
-    tagClass: 'tag-rec',
-    icon: 'fa-flask',
-    img: 'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=400&q=80',
+    img: image2,
     accent: '#34d399',
   },
   {
     id: 3,
     name: 'Biology',
-    tag: 'Recorded',
-    tagClass: 'tag-rec',
-    icon: 'fa-dna',
-    img: 'https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=400&q=80',
+    img: image3,
     accent: '#fbbf24',
   },
   {
     id: 4,
     name: 'Mathematics',
-    tag: 'Starting Soon',
-    tagClass: 'tag-soon',
-    icon: 'fa-square-root-variable',
-    img: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&q=80',
+    img: image4,
     accent: '#a78bfa',
   },
   {
     id: 5,
     name: 'History',
-    tag: 'Recorded',
-    tagClass: 'tag-rec',
-    icon: 'fa-landmark',
-    img: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=400&q=80',
+    img: image5,
     accent: '#f87171',
   },
   {
     id: 6,
     name: 'English',
-    tag: 'Live Now',
-    tagClass: 'tag-live',
-    icon: 'fa-book-open',
-    img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&q=80',
+    img: image6,
     accent: '#fb923c',
   },
 ];
@@ -117,7 +105,7 @@ const Hero = () => {
 
       <div className="hero-inner">
 
-        {/* LEFT — 3 × 2 subject grid */}
+        {/* LEFT — 3 × 2 image-only grid */}
         <div className="hero-left">
           <div className="subject-grid">
             {subjectCards.map((card, i) => (
@@ -126,18 +114,7 @@ const Hero = () => {
                 className={`scard ${visible ? 'scard-visible' : ''}`}
                 style={{ '--delay': `${i * 80}ms`, '--accent': card.accent }}
               >
-                <div className="scard-img-wrap">
-                  <img src={card.img} alt={card.name} className="scard-img" loading="lazy" />
-                  <div className="scard-img-overlay"></div>
-                </div>
-                <div className="scard-body">
-                  <div className="scard-icon-wrap">
-                    <i className={`fa-solid ${card.icon}`}></i>
-                  </div>
-                  <div className="scard-info">
-                    <span className="scard-name">{card.name}</span>
-                  </div>
-                </div>
+                <img src={card.img} alt={card.name} className="scard-img" loading="lazy" />
               </div>
             ))}
           </div>
